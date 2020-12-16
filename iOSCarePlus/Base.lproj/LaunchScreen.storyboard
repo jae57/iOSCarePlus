@@ -66,8 +66,8 @@
                                     <constraint firstAttribute="width" secondItem="izW-GA-zqE" secondAttribute="height" multiplier="1:1" id="rUZ-nj-IKK"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rdq-hr-VS1">
-                                <rect key="frame" x="310" y="659" width="70" height="70"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rdq-hr-VS1">
+                                <rect key="frame" x="303" y="633" width="84" height="84"/>
                                 <color key="backgroundColor" red="0.32549019607843138" green="0.32941176470588235" blue="0.45882352941176469" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Rdq-hr-VS1" secondAttribute="height" multiplier="1:1" id="IXs-KU-N5Z"/>
@@ -79,9 +79,11 @@
                         <constraints>
                             <constraint firstItem="izW-GA-zqE" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="0gm-ja-bnw"/>
                             <constraint firstItem="qLv-bx-tPH" firstAttribute="top" secondItem="BsN-xk-e5i" secondAttribute="top" id="2FB-N4-HEX"/>
+                            <constraint firstItem="Rdq-hr-VS1" firstAttribute="top" secondItem="UhG-Vw-Fop" secondAttribute="bottom" constant="31" id="2V9-7H-qlT"/>
                             <constraint firstItem="UhG-Vw-Fop" firstAttribute="leading" secondItem="qLv-bx-tPH" secondAttribute="trailing" id="2n1-Id-g5M"/>
                             <constraint firstItem="BsN-xk-e5i" firstAttribute="top" secondItem="FTx-MW-DKD" secondAttribute="bottom" constant="12" id="5W6-S9-UyG"/>
                             <constraint firstItem="izW-GA-zqE" firstAttribute="top" secondItem="qLv-bx-tPH" secondAttribute="bottom" constant="4" id="5Xf-Sb-NMk"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Rdq-hr-VS1" secondAttribute="trailing" constant="27" id="9Hu-E9-aLz"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="FTx-MW-DKD" secondAttribute="trailing" id="DSr-D5-7vK"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dPH-oL-5Ri" secondAttribute="trailing" constant="14" id="FHK-UV-PsP"/>
                             <constraint firstItem="BsN-xk-e5i" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Fjg-QJ-pVz"/>
@@ -94,7 +96,7 @@
                             <constraint firstItem="dPH-oL-5Ri" firstAttribute="leading" secondItem="4hE-uV-oje" secondAttribute="trailing" constant="51" id="cTZ-Xo-VWb"/>
                             <constraint firstItem="UhG-Vw-Fop" firstAttribute="top" secondItem="BsN-xk-e5i" secondAttribute="top" id="j6O-8g-fJ5"/>
                             <constraint firstItem="FTx-MW-DKD" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="jJF-Lg-51g"/>
-                            <constraint firstItem="Rdq-hr-VS1" firstAttribute="leading" secondItem="izW-GA-zqE" secondAttribute="trailing" constant="24" id="kIl-mm-Whb"/>
+                            <constraint firstItem="Rdq-hr-VS1" firstAttribute="leading" secondItem="izW-GA-zqE" secondAttribute="trailing" constant="27" id="kIl-mm-Whb"/>
                             <constraint firstItem="4hE-uV-oje" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="21" id="q2y-Qx-K4L"/>
                             <constraint firstItem="4hE-uV-oje" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="33" id="qRv-ss-jsO"/>
                             <constraint firstItem="FTx-MW-DKD" firstAttribute="top" secondItem="4hE-uV-oje" secondAttribute="bottom" constant="48" id="sVV-hi-tNa"/>
