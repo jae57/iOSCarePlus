@@ -13,8 +13,8 @@
 		17AA4F1E25809FAA0036CF75 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17AA4F1C25809FAA0036CF75 /* Main.storyboard */; };
 		17AA4F2025809FAD0036CF75 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17AA4F1F25809FAD0036CF75 /* Assets.xcassets */; };
 		17AA4F2325809FAD0036CF75 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17AA4F2125809FAD0036CF75 /* LaunchScreen.storyboard */; };
-		17AA4F2E25809FAD0036CF75 /* iOSCarePlusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17AA4F2D25809FAD0036CF75 /* iOSCarePlusTests.swift */; };
-		17AA4F3925809FAD0036CF75 /* iOSCarePlusUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17AA4F3825809FAD0036CF75 /* iOSCarePlusUITests.swift */; };
+		17AA4F2E25809FAD0036CF75 /* IOSCarePlusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17AA4F2D25809FAD0036CF75 /* IOSCarePlusTests.swift */; };
+		17AA4F3925809FAD0036CF75 /* IOSCarePlusUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17AA4F3825809FAD0036CF75 /* IOSCarePlusUITests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,10 +44,10 @@
 		17AA4F2225809FAD0036CF75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		17AA4F2425809FAD0036CF75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		17AA4F2925809FAD0036CF75 /* iOSCarePlusTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSCarePlusTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		17AA4F2D25809FAD0036CF75 /* iOSCarePlusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSCarePlusTests.swift; sourceTree = "<group>"; };
+		17AA4F2D25809FAD0036CF75 /* IOSCarePlusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSCarePlusTests.swift; sourceTree = "<group>"; };
 		17AA4F2F25809FAD0036CF75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		17AA4F3425809FAD0036CF75 /* iOSCarePlusUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSCarePlusUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		17AA4F3825809FAD0036CF75 /* iOSCarePlusUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSCarePlusUITests.swift; sourceTree = "<group>"; };
+		17AA4F3825809FAD0036CF75 /* IOSCarePlusUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSCarePlusUITests.swift; sourceTree = "<group>"; };
 		17AA4F3A25809FAD0036CF75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -113,7 +113,7 @@
 		17AA4F2C25809FAD0036CF75 /* iOSCarePlusTests */ = {
 			isa = PBXGroup;
 			children = (
-				17AA4F2D25809FAD0036CF75 /* iOSCarePlusTests.swift */,
+				17AA4F2D25809FAD0036CF75 /* IOSCarePlusTests.swift */,
 				17AA4F2F25809FAD0036CF75 /* Info.plist */,
 			);
 			path = iOSCarePlusTests;
@@ -122,7 +122,7 @@
 		17AA4F3725809FAD0036CF75 /* iOSCarePlusUITests */ = {
 			isa = PBXGroup;
 			children = (
-				17AA4F3825809FAD0036CF75 /* iOSCarePlusUITests.swift */,
+				17AA4F3825809FAD0036CF75 /* IOSCarePlusUITests.swift */,
 				17AA4F3A25809FAD0036CF75 /* Info.plist */,
 			);
 			path = iOSCarePlusUITests;
@@ -135,6 +135,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 17AA4F3D25809FAD0036CF75 /* Build configuration list for PBXNativeTarget "iOSCarePlus" */;
 			buildPhases = (
+				17AA4F4C2580FECC0036CF75 /* Run Swift Lint */,
 				17AA4F0F25809FAA0036CF75 /* Sources */,
 				17AA4F1025809FAA0036CF75 /* Frameworks */,
 				17AA4F1125809FAA0036CF75 /* Resources */,
@@ -253,6 +254,27 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		17AA4F4C2580FECC0036CF75 /* Run Swift Lint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Swift Lint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# swiftlint 파일이 있으면 실행하고 없으면 error 주겠다\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		17AA4F0F25809FAA0036CF75 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -268,7 +290,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				17AA4F2E25809FAD0036CF75 /* iOSCarePlusTests.swift in Sources */,
+				17AA4F2E25809FAD0036CF75 /* IOSCarePlusTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,7 +298,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				17AA4F3925809FAD0036CF75 /* iOSCarePlusUITests.swift in Sources */,
+				17AA4F3925809FAD0036CF75 /* IOSCarePlusUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
