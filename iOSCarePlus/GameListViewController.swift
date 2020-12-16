@@ -41,6 +41,24 @@ class GameListViewController: UIViewController {
         }
     }
     
+    private func makeModel(content: NewGameContent, price: NewGamePrice) -> GameItemModel? {
+        guard let regularIntPrice = Int(price.regularPrice.rawValue) else { return nil }
+        
+        if let discountPrice: Price = price.discountPrice {
+            guard let discountIntPrice = Int(discountPrice.rawValue) else { return nil }
+            
+            return GameItemModel(gameTitle: content.formalName,
+                                 gamePrice: regularIntPrice,
+                                 gameSalePrice: discountIntPrice,
+                                 imageUrl: content.heroBannerUrl)
+        } else {
+            return GameItemModel(gameTitle: content.formalName,
+                                 gamePrice: nil,
+                                 gameSalePrice: regularIntPrice,
+                                 imageUrl: content.heroBannerUrl)
+        }
+    }
+    
     private func getGamePriceApiCall(_ contentDictionary: [Int: NewGameContent]) { // class 로 만드는 방법? inout
         let ids: String = contentDictionary.keys.map { String($0) }.joined(separator: ",")
         
@@ -53,24 +71,8 @@ class GameListViewController: UIViewController {
                     
                     var newGameItems: [GameItemModel] = []
                     for price in modelResponse.prices {
-                        guard let content = contentDictionary[price.titleId] else { return }
-                        
-                        var model: GameItemModel
-                        guard let regularIntPrice = Int(price.regularPrice.rawValue) else { return }
-                        
-                        if let discountPrice: Price = price.discountPrice {
-                            guard let discountIntPrice = Int(discountPrice.rawValue) else { return }
-                            
-                            model = GameItemModel(gameTitle: content.formalName,
-                                                  gamePrice: regularIntPrice,
-                                                  gameSalePrice: discountIntPrice,
-                                                  imageUrl: content.heroBannerUrl)
-                        } else {
-                            model = GameItemModel(gameTitle: content.formalName,
-                                                  gamePrice: nil,
-                                                  gameSalePrice: regularIntPrice,
-                                                  imageUrl: content.heroBannerUrl)
-                        }
+                        guard let content = contentDictionary[price.titleId],
+                              let model = self?.makeModel(content: content, price: price) else { return }
                         
                         newGameItems.append(model)
                     }
