@@ -11,7 +11,7 @@ import UIKit
 class GameListViewController: UIViewController {
     var newCount: Int = 10
     var newOffset: Int = 0
-    var isEnd: Bool = false // 여기를 응답의 total 과 비교해서 바로 불린값 계산해서 주는 computedProperty 로 해줘도 됨
+    var isEnd: Bool? // 여기를 응답의 total 과 비교해서 바로 불린값 계산해서 주는 computedProperty 로 해줘도 됨
     var getNewGameListUrl: String { // computedProperty 는 무조건 var
         "https://ec.nintendo.com/api/KR/ko/search/new?count=\(newCount)&offset=\(newOffset)"
     }
@@ -70,10 +70,7 @@ class GameListViewController: UIViewController {
                 newGameItems.append(model)
             }
             
-            //self?.gameItems = newGameItems
-            if newGameItems.isEmpty {
-                self?.isEnd = true
-            }
+            self?.isEnd = newGameItems.isEmpty
             
             self?.gameItems.append(contentsOf: newGameItems)
         }
@@ -112,10 +109,13 @@ extension GameListViewController: UITableViewDelegate {
 extension GameListViewController: UITableViewDataSource {
     // 테이블 뷰가 그려질 때 최초에 한번 ( reload 할 때도 계속 호출 되는 듯? )
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let isEnd = isEnd else { return 0 }
+
         if isEnd {
             return gameItems.count
+        } else {
+            return gameItems.count + 1
         }
-        return gameItems.count + 1
     }
     
     // cellForRowAt 보다 더 빨리 불림 // 이제 보이려고 할 때
