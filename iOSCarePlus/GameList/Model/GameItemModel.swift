@@ -9,6 +9,9 @@ import Foundation
 
 struct NewGameResponse: Decodable {
     let contents: [NewGameContent]
+    let length: Int
+    let offset: Int
+    let total: Int
 }
 
 struct NewGameContent: Decodable {

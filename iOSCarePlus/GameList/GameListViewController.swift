@@ -9,12 +9,23 @@ import Alamofire
 import UIKit
 
 class GameListViewController: UIViewController {
-    let getNewGameListUrl: String = "https://ec.nintendo.com/api/KR/ko/search/new?count=10&offset=0"
+    var newCount: Int = 10
+    var newOffset: Int = 0
+    var isEnd: Bool = false // 여기를 응답의 total 과 비교해서 바로 불린값 계산해서 주는 computedProperty 로 해줘도 됨
+    var getNewGameListUrl: String { // computedProperty 는 무조건 var
+        "https://ec.nintendo.com/api/KR/ko/search/new?count=\(newCount)&offset=\(newOffset)"
+    }
+    
+    // 1. 함수로 만들거나 2. 확장을 만들거나
+//    private func isIndicatorCell(_ indexPath) -> Bool {
+//        indexPath.row == gameItems.count
+//    }
+    
     let getGamePriceUrl: String = "https://api.ec.nintendo.com/v1/price"
     
     @IBOutlet private weak var tableView: UITableView!
     
-    var gameItems: [GameItemModel]? {
+    var gameItems: [GameItemModel] = [] {
         didSet {
             tableView.reloadData()
         }
@@ -22,6 +33,7 @@ class GameListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        tableView.register(GameItemCodeTableViewCell.self, forCellReuseIdentifier: "GameItemCodeTableViewCell")
         newGameListApiCall()
     }
     
@@ -58,7 +70,12 @@ class GameListViewController: UIViewController {
                 newGameItems.append(model)
             }
             
-            self?.gameItems = newGameItems
+            //self?.gameItems = newGameItems
+            if newGameItems.isEmpty {
+                self?.isEnd = true
+            }
+            
+            self?.gameItems.append(contentsOf: newGameItems)
         }
     }
     
@@ -86,17 +103,50 @@ class GameListViewController: UIViewController {
 extension GameListViewController: UITableViewDelegate {
 }
 
+//extension IndexPath {
+//    var isIndicatorCell: Bool {
+//        indexPath.row == gameItems.count
+//    }
+//}
+
 extension GameListViewController: UITableViewDataSource {
+    // 테이블 뷰가 그려질 때 최초에 한번 ( reload 할 때도 계속 호출 되는 듯? )
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        gameItems?.count ?? 0
+        if isEnd {
+            return gameItems.count
+        }
+        return gameItems.count + 1
+    }
+    
+    // cellForRowAt 보다 더 빨리 불림 // 이제 보이려고 할 때
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == gameItems.count {
+            newOffset += 10
+            newGameListApiCall()
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let gameItems = gameItems else { return .init() }
+        //        let cell = tableView.dequeueReusableCell(withIdentifier: "GameItemCodeTableViewCell", for: indexPath)
+        //        return cell
         
+        // 페이징 1. 맨 마지막 셀을 이용하는 방법
+        if indexPath.row == gameItems.count {
+            // 위로 옮겼음
+//            newOffset += 10
+//            newGameListApiCall()
+            
+            // storyboard에서만들면 자동으로 table view 에 register 해줌
+            // return UITableViewCell()
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "IndicatorCell", for: indexPath) as? IndicatorTableViewCell else { return .init() }
+            cell.animationIndicatorView(on: true)
+            
+            return cell
+        }
+
         let cell: GameItemTableViewCell = tableView.dequeueReusableCell(withIdentifier: "GameItemTableViewCell",
                                                                         for: indexPath) as! GameItemTableViewCell
-        
+
         cell.setModel(gameItems[indexPath.row])
         return cell
     }
