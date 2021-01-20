@@ -11,6 +11,9 @@ class ViewController: UIViewController {
     @IBOutlet private weak var logoView: UIView!
     @IBOutlet private weak var logoViewTopConstraint: NSLayoutConstraint!
     @IBOutlet private weak var backgroundImageLeadingConstraint: NSLayoutConstraint!
+    @IBAction private func logoTapAction(_ sender: UITapGestureRecognizer) {
+        print("tap!")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +29,8 @@ class ViewController: UIViewController {
             [weak self] in
             // change one more view 라는 설명 쓰여진 메서드
             self?.slideBackgroundImageAnimation()
-            self?.blinkLogoAnimation()
+            //self?.blinkLogoAnimation() // 애니메이션 중에는 뷰를 복사해서 보여주고 원래 뷰는
+            // 숨김처리되므로 탭 제스처도 동작하지 않음 따라서 탭 제스처를 위해 우선 블링크 애니메이션 주석!
         }
     }
     

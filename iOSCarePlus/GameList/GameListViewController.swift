@@ -9,11 +9,42 @@ import Alamofire
 import UIKit
 
 class GameListViewController: UIViewController {
+    @IBOutlet private weak var newButton: SelectableButton!
+    @IBOutlet private weak var saleButton: SelectableButton!
+    @IBAction private func newButtonTouchUp(_ sender: SelectableButton) {
+//        newButton.select(true)
+//        saleButton.select(false)
+        newButton.isSelected = true
+        saleButton.isSelected = false
+        UIView.animate(withDuration: 0.5) { [weak self] in
+            self?.selectedLineCenterConstraints.constant = 0
+            self?.view.layoutIfNeeded()
+        }
+        gameItems.removeAll()
+        newGameListApiCall()
+    }
+    @IBOutlet private weak var selectedLineCenterConstraints: NSLayoutConstraint!
+    
+    @IBAction private func saleButtonTouchUp(_ sender: SelectableButton) {
+        newButton.isSelected = false
+        saleButton.isSelected = true
+        
+        let constant: CGFloat = saleButton.center.x - newButton.center.x
+        UIView.animate(withDuration: 0.5) { [weak self] in
+            self?.selectedLineCenterConstraints.constant = constant
+            self?.view.layoutIfNeeded()
+        }
+        gameItems.removeAll()
+        saleGameListApiCall()
+    }
     var newCount: Int = 10
     var newOffset: Int = 0
     var isEnd: Bool? // 여기를 응답의 total 과 비교해서 바로 불린값 계산해서 주는 computedProperty 로 해줘도 됨
     var getNewGameListUrl: String { // computedProperty 는 무조건 var
         "https://ec.nintendo.com/api/KR/ko/search/new?count=\(newCount)&offset=\(newOffset)"
+    }
+    var getSaleGameListUrl: String {
+        "https://ec.nintendo.com/api/KR/ko/search/sales?count=\(newCount)&offset=\(newOffset)"
     }
     
     // 1. 함수로 만들거나 2. 확장을 만들거나
@@ -34,11 +65,30 @@ class GameListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 //        tableView.register(GameItemCodeTableViewCell.self, forCellReuseIdentifier: "GameItemCodeTableViewCell")
+//        newButton.select(true)
+//        saleButton.select(false)
         newGameListApiCall()
     }
     
     private func newGameListApiCall() {
         AF.request(getNewGameListUrl).responseJSON { [weak self] response in
+            guard let data = response.data else { return }
+            
+            let decoder: JSONDecoder = JSONDecoder()
+            guard let modelResponse: NewGameResponse = try? decoder.decode(NewGameResponse.self, from: data) else { return }
+            
+            var contentDictionary: [Int: NewGameContent] = [:]
+            for content in modelResponse.contents {
+                contentDictionary[content.titleId] = content
+            }
+            
+            self?.getGamePriceApiCall(contentDictionary)
+        }
+    }
+    
+    // NEW
+    private func saleGameListApiCall() {
+        AF.request(getSaleGameListUrl).responseJSON { [weak self] response in
             guard let data = response.data else { return }
             
             let decoder: JSONDecoder = JSONDecoder()
@@ -139,7 +189,7 @@ extension GameListViewController: UITableViewDataSource {
             // storyboard에서만들면 자동으로 table view 에 register 해줌
             // return UITableViewCell()
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "IndicatorCell", for: indexPath) as? IndicatorTableViewCell else { return .init() }
-            cell.animationIndicatorView(on: true)
+            cell.animationIndicatorView(isOn: true)
             
             return cell
         }

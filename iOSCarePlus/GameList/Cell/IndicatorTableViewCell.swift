@@ -10,8 +10,8 @@ import UIKit
 class IndicatorTableViewCell: UITableViewCell {
     @IBOutlet private weak var activityIndicatorView: UIActivityIndicatorView!
     
-    func animationIndicatorView(on: Bool) {
-        if on {
+    func animationIndicatorView(isOn: Bool) {
+        if isOn {
             activityIndicatorView.startAnimating()
         } else {
             activityIndicatorView.stopAnimating()
